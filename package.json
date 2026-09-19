@@ -1,0 +1,14 @@
+{
+  "name": "wechat-chat-room",
+  "version": "1.0.0",
+  "private": true,
+  "description": "微信群风格在线临时聊天室 · 不保存聊天记录 · Cloudflare Workers + Durable Objects",
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^4.131.1"
+  }
+}

@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>微信群聊室 · 在线临时聊天</title>
+  <meta name="description" content="微信群风格的在线临时聊天室：随机昵称即来即聊，不保存任何聊天记录。" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%2307C160'/%3E%3Cpath d='M32 14c-10.5 0-19 6.9-19 15.4 0 4.9 2.9 9.3 7.4 12.1l-1.9 6.9c-.2.8.7 1.4 1.4 1l8-4.4c1.3.2 2.7.4 4.1.4 10.5 0 19-6.9 19-15.4S42.5 14 32 14z' fill='%23fff'/%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div id="app" class="app">
+    <header class="topbar">
+      <div class="brand">
+        <span class="logo" aria-hidden="true">
+          <svg viewBox="0 0 64 64" width="24" height="24"><path d="M32 12c-11.6 0-21 7.6-21 17 0 5.4 3.2 10.2 8.2 13.3l-2.1 7.6c-.2.9.8 1.6 1.6 1.1l8.8-4.9c1.5.3 3 .4 4.5.4 11.6 0 21-7.6 21-17S43.6 12 32 12z" fill="#fff"/></svg>
+        </span>
+        <div class="titles">
+          <h1>微信群聊室</h1>
+          <p class="status-line">
+            <span id="statusDot" class="dot"></span><span id="statusText">连接中…</span>
+            <span class="sep">·</span><span id="onlineCount">0</span> 人在线
+          </p>
+        </div>
+      </div>
+      <div class="topbar-actions">
+        <button id="copyAllBtn" class="ghost-btn" type="button" title="复制全部聊天记录">复制记录</button>
+        <button id="adminBtn" class="ghost-btn admin-entry" type="button">管理员登录</button>
+      </div>
+    </header>
+
+    <div id="adminBar" class="admin-bar hidden">
+      <span class="admin-chip">🛡️ 管理员模式</span>
+      <label class="switch-wrap" for="closeSwitch">
+        <span class="switch-label">关闭群聊</span>
+        <span class="switch">
+          <input type="checkbox" id="closeSwitch" />
+          <i></i>
+        </span>
+      </label>
+      <button id="unpinBtn" class="ghost-btn small hidden" type="button">取消置顶</button>
+      <span class="admin-tip">可以对任意消息点「置顶」</span>
+    </div>
+
+    <main class="chat-area">
+      <div id="pinnedBar" class="pinned-bar hidden">
+        <span class="pin-ico">📌</span>
+        <div class="pin-body">
+          <span class="pin-label">置顶消息</span>
+          <span id="pinText" class="pin-text"></span>
+        </div>
+        <button id="unpinX" class="pin-x hidden" type="button" title="取消置顶">×</button>
+      </div>
+
+      <div id="messages" class="messages">
+        <div id="emptyState" class="empty-state">
+          <div class="empty-emoji">👋</div>
+          <p>欢迎来到群聊室</p>
+          <p class="empty-sub">昵称是随机分配的，畅所欲言，记录不会被保存</p>
+        </div>
+        <button id="newMsgPill" class="newmsg-pill hidden" type="button">↓ 有新消息</button>
+      </div>
+    </main>
+
+    <div id="closedBanner" class="closed-banner hidden">
+      <span>🔒 群聊已关闭，仅管理员可以发言</span>
+    </div>
+
+    <footer class="composer">
+      <div class="composer-inner">
+        <textarea id="input" rows="1" placeholder="输入消息，Enter 发送，Shift + Enter 换行"></textarea>
+        <button id="sendBtn" class="send-btn" type="button">发送</button>
+      </div>
+      <p class="composer-hint">聊天记录仅保存在内存中，刷新或退出后自动清空</p>
+    </footer>
+  </div>
+
+  <div id="adminModal" class="modal-mask hidden" role="dialog" aria-modal="true" aria-labelledby="adminModalTitle">
+    <div class="modal-card">
+      <button id="modalClose" class="modal-close" type="button" aria-label="关闭">×</button>
+      <h2 id="adminModalTitle">管理员登录</h2>
+      <p class="modal-sub">登录后可以置顶消息、开启/关闭群聊</p>
+      <form id="adminForm" autocomplete="off">
+        <label class="field">
+          <span>账号</span>
+          <input id="adminUser" type="text" autocomplete="username" required />
+        </label>
+        <label class="field">
+          <span>密码</span>
+          <input id="adminPass" type="password" autocomplete="current-password" required />
+        </label>
+        <p id="adminErr" class="form-err hidden"></p>
+        <div class="modal-btns">
+          <button type="button" id="adminCancel" class="ghost-btn">取消</button>
+          <button type="submit" id="adminSubmit" class="primary-btn">登 录</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div id="toasts" class="toasts" aria-live="polite"></div>
+
+  <script src="/app.js"></script>
+</body>
+</html>
